@@ -7,6 +7,11 @@ import numpy as np
 import asyncio
 from fastapi.middleware.cors import CORSMiddleware
 
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
+
 semaphore = asyncio.Semaphore(2) 
 
 app = FastAPI()
@@ -29,17 +34,16 @@ app.add_middleware(
 
 
 # Load model once globally
-class_names = ["A", "B", "C", "D", "E", "F", "G", "NO SIGN SHOWN"]
+class_names = ["A", "B", "C", "D", "E", "F", "G", "I", "J", "K", "L", "M", "N", "NO SIGN SHOWN", "O", "P", "Q", "R"]
 
 def load_and_preprocess_image(img):
     img = tf.convert_to_tensor(img, dtype=tf.float32)
     img = tf.image.resize(img, [256, 256])
-    img = img / 255.0
     img = tf.expand_dims(img, axis=0) 
     return img
 
 def predict(input_tensor):
-    model = tf.keras.models.load_model("/Users/abhishek/Desktop/Projects/AlphaSign/alpha_sign/src/api/ASLCustomABCDEDFGBEST.keras")
+    model = tf.keras.models.load_model(os.getenv("MODEL"))
     predictions = model.predict(input_tensor)
     predicted_class = tf.argmax(predictions[0]).numpy()
     classification = class_names[predicted_class]
@@ -60,7 +64,7 @@ def process_image(photo_str: str):
 
     imgRGB = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
 
-    cropped_hand = imgRGB[100:350, 750:1000]
+    cropped_hand = imgRGB[100:375, 750:1025]
     
     processed_img = load_and_preprocess_image(cropped_hand)
     prediction = predict(processed_img)

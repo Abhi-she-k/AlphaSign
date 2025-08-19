@@ -31,8 +31,8 @@ export default function Camera({ classification, setClassification }: CameraProp
   const box: Box = {
     x: 750,
     y: 100,
-    width: 250,
-    height: 250,
+    width: 275,
+    height: 275,
   };
 
   useEffect(() => {
@@ -52,7 +52,7 @@ export default function Camera({ classification, setClassification }: CameraProp
     if (pageloaded) {
       const interval = setInterval(() => {
         captureBoxFrame();
-      }, 1200);
+      }, 1000);
 
       return () => {
         clearInterval(interval);
@@ -125,7 +125,7 @@ export default function Camera({ classification, setClassification }: CameraProp
             left: box.x,
             width: box.width,
             height: box.height,
-            border: "2px solid gray",
+            border: "5px solid blue",
             pointerEvents: "none",
           }}
         />

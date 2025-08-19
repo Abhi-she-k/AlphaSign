@@ -2,6 +2,9 @@
 
 import React, { useRef, useEffect, useState } from "react";
 
+import { getRandomLetter } from "../utils/utilities";
+
+
 interface CameraProps {
     classification: string;
 }
@@ -12,8 +15,6 @@ export default function PlayStatsBar({ classification }: CameraProps){
     const [seconds, setSeconds] = useState<number>(0)
     const [score, setScore] = useState<number>(0)
 
-    let letters = ["A", "B", "C", "D", "E", "F", "G"]
-
     const timer = useRef<NodeJS.Timeout | null>(null);
     const timer2 = useRef<NodeJS.Timeout | null>(null);
 
@@ -23,7 +24,8 @@ export default function PlayStatsBar({ classification }: CameraProps){
             if (!timer.current) {  
               setSeconds(5)
               timer.current = setTimeout(() => {
-                getRandomLetter();
+                const newLetter = getRandomLetter(classification);
+                setRandomLetter(newLetter);                
                 timer.current = null;
                 if(timer2.current){
                     clearInterval(timer2.current)
@@ -54,18 +56,18 @@ export default function PlayStatsBar({ classification }: CameraProps){
 
       }, [classification, randomLetter]);
     
-    function getRandomLetter(){
+    // function getRandomLetter(){
 
-        const filteredLetters = letters.filter((letter) => letter !== classification);
+    //     const filteredLetters = letters.filter((letter) => letter !== classification);
 
-        let random = filteredLetters[Math.floor(Math.random() * filteredLetters.length)]
+    //     let random = filteredLetters[Math.floor(Math.random() * filteredLetters.length)]
         
-        setRandomLetter(random)
-    }
+    //     setRandomLetter(random)
+    // }
 
     const statsBarOption = "flex-col text-center mx-10 p-5 bg-transparent"
     const title = "text-3xl tracking-wide font-bold"
-    const subtitle = "mt-5 text-xl";
+    const subtitle = "mt-5 text-xl w-auto";
 
     return (
         <div className="flex flex-wrap justify-center rounded-lg shadow-xl mx-50 py-5 bg-gradient-to-r from-blue-500 to-blue-300 mt-5 text-white">
@@ -74,8 +76,13 @@ export default function PlayStatsBar({ classification }: CameraProps){
                 <h1 className={subtitle}>{seconds}</h1>
             </div>
             <div className={statsBarOption}>
+
                 <h1 className={title}>Current Sign</h1>
-                <h1 className={subtitle}>{classification}</h1>
+                <h1 className={`${subtitle} ${classification === randomLetter 
+                    ? "bg-blue-100 rounded-md text-indigo-500 font-extrabold" 
+                    : null}`}>
+                        {classification}
+                </h1>
             </div>
             <div className={statsBarOption}>
                 <h1 className={title}>Target Sign</h1>

@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import './globals.css';
 import { Inter } from 'next/font/google';
+import Image from 'next/image';
+
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -78,6 +80,12 @@ export default function RootLayout({
         
 
             <div className="flex-col right-0 mx-3 mt-5 mb-5 text-center">
+              {/* <Image 
+                src="logo.png"
+                alt="Alpha Signs Logo"
+                width={150}
+                height={150}
+              /> */}
               <h1 className="mb-5 text-5xl mt-5 leading-none tracking-tight text-gray-900 md:text-5xl lg:text-6xl dark:text-white font-mono"><a className="mb-5 text-5xl mt-5 leading-none tracking-tight text-blue-300 md:text-5xl lg:text-6xl dark:text-white">Alpha</a>Signs</h1>
               <p className="mb-5 text-lg font-normal white lg:text-xl sm:px-16 xl:px-48 dark:text-white">
                 A web application for recognizing American Sign Language (ASL) signs using computer vision.
