@@ -22,6 +22,7 @@ load_dotenv()
 
 app = FastAPI()
 
+
 class ImageData(BaseModel):
     screenshot: str
     request_option: str
