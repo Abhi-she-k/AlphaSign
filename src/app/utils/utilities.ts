@@ -1,6 +1,6 @@
 export function getRandomLetter(classification: string): string {
     
-    let letters = ["A", "B", "C", "D", "E", "F", "G", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R"]
+    let letters = ["A", "B", "C", "D", "E", "F", "G", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"]
     
     const filteredLetters = letters.filter((letter) => letter !== classification);
     return filteredLetters[Math.floor(Math.random() * filteredLetters.length)];
